@@ -21,10 +21,17 @@ function register(req, res) {
          const id = ids[0];
          db.findById(id)
            .then( user => {
+              if(!user) res.status(404).json({Message:`There is no user with this userID${id}`});
               const token = newToken(user);
               res.status(201).json({token: token, id: user.id});
            })
-     });
+            .catch(err => {
+               res.status(500).json({errMessage: `Something went wrong`});
+            })
+     })
+     .catch(err => {
+        res.status(500).json({errMessage: `Failed to register at this time`});
+     })
 }
 
 
