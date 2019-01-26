@@ -43,7 +43,6 @@ function login(req, res) {
    if(!submittedPassword) res.status(400).json({Message: `Password required for login!`});
    db.findByUsername(user.username)
      .then( user => {
-        console.log(`Line 48`, user);
         if(!user) res.status(404).json({Message: `There is no user with this ${user.username} use name`});
         if(user && bcrypt.compareSync(submittedPassword, user.password)) {
             const token = newToken(user);
@@ -58,8 +57,12 @@ function login(req, res) {
 }
 
 function getJokes(req, res) {
+  console.log('Get jokes line 60', req.decoded);
+  const token = req.decoded.jti;
+  console.log('line 62', token);
   const requestOptions = {
-    headers: { accept: 'application/json' },
+    headers: { accept: 'application/json' ,
+                Authorization:token},
   };
 
   axios
