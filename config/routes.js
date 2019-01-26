@@ -1,7 +1,7 @@
 const axios = require('axios');
 const bcrypt = require('bcryptjs');
-
-const { authenticate } = require('../auth/authenticate');
+const db = require('../Helper/dbHelper');
+const { authenticate ,newToken } = require('../auth/authenticate');
 
 module.exports = server => {
   server.post('/api/register', register);
@@ -14,7 +14,17 @@ function register(req, res) {
    const user = req.body;
    if(!user.username) res.status(400).json({Message: `User name is required for registration`});
    if(!user.password) res.status(400).json({Message: `Password is required for registration`});
-   
+   const hash = bcrypt.hashSync(user.password, 10);
+   user.password = hash;
+   db.insertUser(user)
+     .then( ids => {
+         const id = ids[0];
+         db.findById(id)
+           .then( user => {
+              const token = newToken(user);
+              res.status(201).json({token: token, id: user.id});
+           })
+     });
 }
 
 
