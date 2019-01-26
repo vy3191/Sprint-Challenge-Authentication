@@ -1,4 +1,5 @@
 const axios = require('axios');
+const bcrypt = require('bcryptjs');
 
 const { authenticate } = require('../auth/authenticate');
 
@@ -10,7 +11,12 @@ module.exports = server => {
 
 function register(req, res) {
   // implement user registration
+   const user = req.body;
+   if(!user.username) res.status(400).json({Message: `User name is required for registration`});
+   if(!user.password) res.status(400).json({Message: `Password is required for registration`});
+   
 }
+
 
 function login(req, res) {
   // implement user login
