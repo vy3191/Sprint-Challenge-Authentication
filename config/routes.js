@@ -27,16 +27,34 @@ function register(req, res) {
            })
             .catch(err => {
                res.status(500).json({errMessage: `Something went wrong`});
-            })
+            });
      })
      .catch(err => {
         res.status(500).json({errMessage: `Failed to register at this time`});
-     })
+     });
 }
 
 
 function login(req, res) {
   // implement user login
+  const user = req.body;
+   const submittedPassword = user.password;
+   if(!user.username) res.status(400).json({Message: `Username required for login!`});
+   if(!submittedPassword) res.status(400).json({Message: `Password required for login!`});
+   db.findByUsername(user.username)
+     .then( user => {
+        console.log(`Line 48`, user);
+        if(!user) res.status(404).json({Message: `There is no user with this ${user.username} use name`});
+        if(user && bcrypt.compareSync(submittedPassword, user.password)) {
+            const token = newToken(user);
+            res.status(200).json({token: token, id:user.id});
+        } else {
+            res.status(401).json({Message:`Invalid password or username`});
+        }
+     })
+     .catch(err => {
+         res.status(500).json({Message:`Failed to login at this time`});
+     })
 }
 
 function getJokes(req, res) {
