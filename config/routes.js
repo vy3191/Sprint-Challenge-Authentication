@@ -14,7 +14,7 @@ function register(req, res) {
    const user = req.body;
    if(!user.username) res.status(400).json({Message: `User name is required for registration`});
    if(!user.password) res.status(400).json({Message: `Password is required for registration`});
-   if(!user.password.length<6) res.status(400).json({Message:`Password must be at least six characters`});
+  //  if(!user.password.length<6) res.status(400).json({Message:`Password must be at least six characters`});
    const hash = bcrypt.hashSync(user.password, 10);
    user.password = hash;
    db.insertUser(user)

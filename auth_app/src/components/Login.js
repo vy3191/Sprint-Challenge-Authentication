@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import Modal from '../Styles/Modal';
 
 export default class Login extends Component {
   
@@ -35,6 +36,7 @@ export default class Login extends Component {
   render() {
     return (
       <div>
+       <Modal>
         <form onSubmit={this.handleSubmit}>
         <div>         
             <label htmlFor='username'>Username:</label>
@@ -52,6 +54,7 @@ export default class Login extends Component {
            <button type='submit'>Sign In</button>
          </div>
        </form>
+       </Modal>
       </div>
     )
   }
