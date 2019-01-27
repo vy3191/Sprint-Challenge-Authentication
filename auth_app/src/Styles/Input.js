@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const Input = styled.input`
-  padding: 0.5em;
-  margin: 0.5em;
+  padding: 0.65em;
+  margin: 0.8em;
   margin-left:0px;
   color: rgba(0,0,0,.9);
   font-weight:bold;

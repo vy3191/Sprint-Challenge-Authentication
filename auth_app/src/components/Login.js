@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import Modal from '../Styles/Modal';
+import Input from '../Styles/Input';
 
 export default class Login extends Component {
   
@@ -18,6 +19,8 @@ export default class Login extends Component {
   handleSubmit = (event) => {
      event.preventDefault();
      const credentials = this.state;
+     if(!credentials.username) alert('Pleaser enter a valid username');
+     if(!credentials.password) alert('Pleaser enter a valid password');
      const endpoint = 'http://localhost:3300/api/login';
      axios.post(endpoint, credentials)
           .then(response => {
@@ -39,19 +42,21 @@ export default class Login extends Component {
        <Modal>
         <form onSubmit={this.handleSubmit}>
         <div>         
-            <label htmlFor='username'>Username:</label>
-            <input type='text' name='username'
+           
+            <Input type='text' name='username'
                    value={this.state.username}
-                   onChange={this.handleInput}></input>
+                   onChange={this.handleInput}
+                   placeholder='User name'></Input>
          </div>
          <div>
-            <label htmlFor='password'>Password:</label>
-            <input type='text' name='password'
+           
+            <Input type='text' name='password'
                    value={this.state.password}
-                   onChange={this.handleInput}></input>
+                   onChange={this.handleInput}
+                   placeholder='Password'></Input>
          </div>
          <div>
-           <button type='submit'>Sign In</button>
+           <button type='submit' className='sign'>Sign In</button>
          </div>
        </form>
        </Modal>

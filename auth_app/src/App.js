@@ -7,6 +7,7 @@ import Login from './components/Login';
 import Jokes from './components/Users';
 import Register from './components/Register';
 import Header from './Styles/Header';
+import Button from './Styles/Button';
 
 class App extends Component {
   logout = (event) => {
@@ -24,9 +25,9 @@ class App extends Component {
             <NavLink to='/Login'>Log in</NavLink>
             <NavLink to='/Register'>Register</NavLink>
             <NavLink to='/Jokes'>Get Jokes</NavLink>
-            <button onClick={this.logout}>Singout</button>
+            
           </nav>
-          
+          <Button onClick={this.logout}>Singout</Button>
           </Header>  
           <main>
             <Route path='/' component={Home} exact></Route>
