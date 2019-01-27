@@ -8,6 +8,7 @@ export default class Login extends Component {
      password: ''
   }
   handleInput = (event) => {
+     event.preventDefault();
      const target = event.target;
      this.setState({
         [target.name] : target.value
@@ -24,28 +25,33 @@ export default class Login extends Component {
           .catch(err => {
              console.log(`errorMessage: `, err);
           });
-      this.setState({
-         username: '',
-         password:''
-      })    
-  }  
+      
+    this.setState({
+      username: '',
+      password:''
+      });    
+  } 
+ 
   render() {
     return (
       <div>
-        <from>
+        <form onSubmit={this.handleSubmit}>
         <div>         
             <label htmlFor='username'>Username:</label>
             <input type='text' name='username'
-                   value={this.state.username}></input>
+                   value={this.state.username}
+                   onChange={this.handleInput}></input>
          </div>
          <div>
             <label htmlFor='password'>Password:</label>
-            <input type='text' name='password'></input>
+            <input type='text' name='password'
+                   value={this.state.password}
+                   onChange={this.handleInput}></input>
          </div>
          <div>
            <button type='submit'>Sign In</button>
          </div>
-       </from>
+       </form>
       </div>
     )
   }

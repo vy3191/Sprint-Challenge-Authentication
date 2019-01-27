@@ -46,6 +46,7 @@ function login(req, res) {
         if(!user) res.status(404).json({Message: `There is no user with this ${user.username} use name`});
         if(user && bcrypt.compareSync(submittedPassword, user.password)) {
             const token = newToken(user);
+            user.token = token;
             res.status(200).json({token: token, id:user.id});
         } else {
             res.status(401).json({Message:`Invalid password or username`});
@@ -58,11 +59,14 @@ function login(req, res) {
 
 function getJokes(req, res) {
   console.log('Get jokes line 60', req.decoded);
-  const token = req.decoded.jti;
+  // const token = req.decoded.jti;
+  const token = req.decoded.token;
   console.log('line 62', token);
   const requestOptions = {
-    headers: { accept: 'application/json' ,
-                Authorization:token},
+    headers: {
+           accept: 'application/json' ,
+           Authorization:token
+        },  
   };
 
   axios
