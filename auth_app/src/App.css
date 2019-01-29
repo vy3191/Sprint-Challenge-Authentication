@@ -18,6 +18,19 @@
   color: white;
 }
 
+  .ul {
+    list-style: none; /* Remove list bullets */
+    padding: 0;
+    margin-left: 120px;
+    text-align: left
+  }
+  
+  ul li {
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
+  }
+  
 .App-link {
   color: #61dafb;
 }

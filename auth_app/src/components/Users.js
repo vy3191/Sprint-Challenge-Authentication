@@ -3,7 +3,9 @@ import axios from 'axios';
 
 export default class Users extends Component {
    state = {
-     jokes:[]
+     jokes:[],
+     areJokesLoading: true,
+     areYouLoggedIn: false
    }
   componentDidMount() {
      const token = localStorage.getItem('jwt');
@@ -18,21 +20,30 @@ export default class Users extends Component {
           .then( response => {
              console.log(response.data);
              this.setState({
-                jokes: response.data
+                jokes: response.data,
+                areJokesLoading: false,
+                areYouLoggedIn: true
+
              });
           })
           .catch(err=> {
                console.log(`errorMessage:`, err);
+               this.setState({
+                 areYouLoggedIn: false,
+                 areJokesLoading:false
+               })
           })
   }
   render() {
+    const status = this.state.areJokesLoading ? <h1>Wait....Loading..</h1> : <h1>Here you go..</h1>;
     return (
       <div>
-        <h1>List of Users</h1>
-        <ul>
+        <h1>Jokes .. Jokes</h1>
+         {status}
+        <ul className='ul'>
           {
             this.state.jokes.map( joke => (
-               <li key={joke.id}>{joke.joke}</li>
+               <li key={joke.id} className='list'>{joke.joke}</li>
             ))
           }
         </ul>
